@@ -96,7 +96,7 @@ class _MainPageState extends State<MainPage> {
                               backgroundColor: MaterialStatePropertyAll<Color>(
                                   Colors.green)),
                           onPressed: () async {
-                            this.armors = await ArmorProvider()
+                            armors = await ArmorProvider()
                                 .getArmors('head', selectedRank.toLowerCase());
                             setState(() {});
                             print('Traeme los cascos');
@@ -108,11 +108,10 @@ class _MainPageState extends State<MainPage> {
                           style: const ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll<Color>(
                                   Colors.green)),
-                          onPressed: ()async {
-                            this.armors = await ArmorProvider().getArmors('chest',selectedRank.toLowerCase());
-                            setState(() {
-                              
-                            });
+                          onPressed: () async {
+                            armors = await ArmorProvider()
+                                .getArmors('chest', selectedRank.toLowerCase());
+                            setState(() {});
                             print('Pintame los petos');
                           },
                           child: const Image(
@@ -122,11 +121,10 @@ class _MainPageState extends State<MainPage> {
                           style: const ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll<Color>(
                                   Colors.green)),
-                          onPressed: () async{
-                            this.armors = await ArmorProvider().getArmors('gloves',selectedRank.toLowerCase());
-                            setState(() {
-                              
-                            });
+                          onPressed: () async {
+                            armors = await ArmorProvider().getArmors(
+                                'gloves', selectedRank.toLowerCase());
+                            setState(() {});
                             print('Pintame los cintos');
                           },
                           child: const Image(
@@ -142,28 +140,26 @@ class _MainPageState extends State<MainPage> {
                         style: const ButtonStyle(
                             backgroundColor:
                                 MaterialStatePropertyAll<Color>(Colors.green)),
-                        onPressed: ()async {
-                          this.armors = await ArmorProvider().getArmors('waist',selectedRank.toLowerCase());
-                            setState(() {
-                              
-                            });
+                        onPressed: () async {
+                          armors = await ArmorProvider()
+                              .getArmors('waist', selectedRank.toLowerCase());
+                          setState(() {});
                           print('Pintame los pantalones');
                         },
                         child: const Image(
                             image: NetworkImage(
                                 'https://static.wikia.nocookie.net/fanonmonsterhunter/images/2/22/Waist_Icon_White.png/revision/latest?cb=20160106230357'))),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     ElevatedButton(
                         style: const ButtonStyle(
                             backgroundColor:
                                 MaterialStatePropertyAll<Color>(Colors.green)),
-                        onPressed: () async{
-                          this.armors = await ArmorProvider().getArmors('legs',selectedRank.toLowerCase());
-                            setState(() {
-                              
-                            });
+                        onPressed: () async {
+                          armors = await ArmorProvider()
+                              .getArmors('legs', selectedRank.toLowerCase());
+                          setState(() {});
                           print('Pintame las botas');
                         },
                         child: const Image(
@@ -177,20 +173,284 @@ class _MainPageState extends State<MainPage> {
           frontLayer: Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListView.builder(
-              
               itemCount: armors.length,
-              itemBuilder: (context, index) {
+              itemBuilder: (_, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(2.0),
                   child: Row(
                     children: [
-                      Icon(Icons.radio_button_checked_sharp,color: rarityColors[(armors[index].rarity)-1]),
-                      SizedBox(width: 10,),
+                      Icon(Icons.radio_button_checked_sharp,
+                          color: rarityColors[(armors[index].rarity) - 1]),
+                      const SizedBox(
+                        width: 10,
+                      ),
                       Text(armors[index].name),
-                      Spacer(),
-                      ElevatedButton(onPressed: () {
-                        
-                      }, child: Icon(Icons.more_horiz_outlined))
+                      const Spacer(),
+                      ElevatedButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  contentPadding: const EdgeInsets.all(0),
+                                  content: DefaultTabController(
+                                    length: 3,
+                                    child: Scaffold(
+                                      // appBar: AppBar(
+                                      //   leading: Icon(Icons.abc,color: null,),
+                                      //   leadingWidth: 0,
+                                      //   flexibleSpace: Center(child: Text(armors[index].name,style: TextStyle(fontSize: 20),)),
+                                      //   ),
+
+                                      body: Container(
+                                        child: TabBarView(children: [
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Text(
+                                                'Elemental resistances',
+                                                style: TextStyle(fontSize: 20),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image(
+                                                      image: NetworkImage(
+                                                          'https://static.wikia.nocookie.net/monsterhunter/images/a/ae/Status_Effect-Dragonblight_MH4_Icon.png/revision/latest/scale-to-width-down/40?cb=20210117171415')),
+                                                  Text(
+                                                      ' ${armors[index].resistances.dragon}'),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image(
+                                                      image: NetworkImage(
+                                                          'https://static.wikia.nocookie.net/monsterhunter/images/a/a7/Status_Effect-Fireblight_MH4_Icon.png/revision/latest/scale-to-width-down/40?cb=20131017115239')),
+                                                  Text(
+                                                      ' ${armors[index].resistances.fire}'),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image(
+                                                      image: NetworkImage(
+                                                          'https://static.wikia.nocookie.net/monsterhunter/images/a/ac/Status_Effect-Thunderblight_MH4_Icon.png/revision/latest/scale-to-width-down/40?cb=20131017124807')),
+                                                  Text(
+                                                      ' ${armors[index].resistances.thunder}'),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image(
+                                                      image: NetworkImage(
+                                                          'https://static.wikia.nocookie.net/monsterhunter/images/1/16/Status_Effect-Waterblight_MH4_Icon.png/revision/latest/scale-to-width-down/40?cb=20131017122916')),
+                                                  Text(
+                                                      ' ${armors[index].resistances.water}'),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image(
+                                                      image: NetworkImage(
+                                                          'https://static.wikia.nocookie.net/monsterhunter/images/6/6c/Status_Effect-Iceblight_MH4_Icon.png/revision/latest/scale-to-width-down/40?cb=20131011074508')),
+                                                  Text(
+                                                      ' ${armors[index].resistances.ice}'),
+                                                ],
+                                              ),
+                                              Text('Defense'),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Image(image: NetworkImage('https://static.wikia.nocookie.net/monsterhunter/images/9/99/StatusEffect-Defense_Up_Icon_MHRS.svg/revision/latest/scale-to-width-down/40?cb=20220803225004')),
+                                                  Text(' ${armors[index].defense.base}- ${armors[index].defense.max}')
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width: 20,
+                                                    height: 5,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(2),
+                                                        color: Colors.grey),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Container(
+                                                    width: 5,
+                                                    height: 5,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(2),
+                                                        color: Colors.grey),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Container(
+                                                    width: 5,
+                                                    height: 5,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(2),
+                                                        color: Colors.grey),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              const Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text('Skills'),
+                                              ),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: 
+                                                      armors[index].skills.map((element) {
+                                                        return Text('${element.skillName} ${element.level}:\n ${element.description}');
+                                                      }).toList()
+                                                    
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      width: 5,
+                                                      height: 5,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(2),
+                                                          color: Colors.grey),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Container(
+                                                      width: 20,
+                                                      height: 5,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(2),
+                                                          color: Colors.grey),
+                                                    ),
+                                                    
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Container(
+                                                      width: 5,
+                                                      height: 5,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(2),
+                                                          color: Colors.grey),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              const Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text('Recipe'),
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  children: armors[index].crafting.materials.map((element) {
+                                                    return Text('${element.item.name} X ${element.quantity}');
+                                                  }).toList(),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      width: 5,
+                                                      height: 5,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(2),
+                                                          color: Colors.grey),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    
+                                                    Container(
+                                                      width: 5,
+                                                      height: 5,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(2),
+                                                          color: Colors.grey),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Container(
+                                                      width: 20,
+                                                      height: 5,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(2),
+                                                          color: Colors.grey),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ]),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: const Icon(Icons.more_horiz_outlined))
                     ],
                   ),
                 );
